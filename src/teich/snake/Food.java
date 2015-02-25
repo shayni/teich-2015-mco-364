@@ -1,22 +1,36 @@
 package teich.snake;
 
+import java.util.Random;
+
 public class Food {
 
+	private Square square;
 	private int x;
 	private int y;
+	private Random random;
 
 	public Food() {
-		x = 100;
-		y = 100;
+		random = new Random();
+		x = random.nextInt(40);
+		y = random.nextInt(40);
+		square = new Square(x * 10, y * 10);
+
 	}
 
 	public void spawnFood() {
-		x = 0 + (int) (Math.random() * 20);
-		y = 0 + (int) (Math.random() * 20);
-		if (x < 0 || x > 400 && y < 0 || y > 400) {
-			x = (int) (Math.random() * 20);
-			y = (int) (Math.random() * 20);
+
+		x = random.nextInt(40);
+		y = random.nextInt(40);
+		while (x < 0 || x > 40 || x == 10 || y < 0 || y > 40 || y == 10) {
+			x = random.nextInt(40);
+			y = random.nextInt(40);
 		}
+		square = new Square(x * 10, y * 10);
+
+	}
+
+	public Square getSquare() {
+		return square;
 	}
 
 	public int getX() {

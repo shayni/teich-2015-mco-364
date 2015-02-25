@@ -10,6 +10,10 @@ public class Snake {
 	public Snake() {
 		snake = new ArrayDeque<Square>();
 		snake.add(new Square(200, 200));
+		snake.add(new Square(210, 200));
+		snake.add(new Square(220, 200));
+		snake.add(new Square(230, 200));
+		snake.add(new Square(240, 200));
 		direction = 6;
 	}
 
@@ -18,47 +22,45 @@ public class Snake {
 	}
 
 	public void move(int dir) {
-		Square s;
+		Square s = snake.peekFirst();
+		Square newSquare = s;
 		switch (dir) {
 		case 6:
-			s = snake.removeLast();
+
 			int x = s.getX();
 			int y = s.getY();
-			s.setX((x + 10));
-			snake.addFirst(s);
+			// s.setX((x + 10));
+			newSquare = new Square((x + 10), y);
+			// snake.addFirst(s);
+			// snake.removeLast();
 			break;
 		case 4:
-			s = snake.removeLast();
 			x = s.getX();
 			y = s.getY();
-			if (x - 1 < 0) {
-				s.setX(19);
-			} else {
-				s.setX((x - 10));
-			}
-			snake.addFirst(s);
+			newSquare = new Square((x - 10), y);
 
+			// s.setX((x - 10));
+			// snake.addFirst(s);
 			break;
 		case 8:
-			s = snake.removeLast();
 			x = s.getX();
 			y = s.getY();
-			if (y - 1 < 0) {
-				s.setY(19);
-			} else {
-				s.setY((y - 10));
-			}
-			snake.addFirst(s);
+			// s.setY((y - 10));
+			newSquare = new Square((x), (y - 10));
+
+			// snake.addFirst(s);
 			break;
 		case 2:
-			s = snake.removeLast();
 			x = s.getX();
 			y = s.getY();
-			s.setY((y + 10));
-			snake.addFirst(s);
+			newSquare = new Square((x), (y + 10));
+
+			// s.setY((y + 10));
+			// snake.addFirst(s);
 			break;
 		}
-
+		snake.removeLast();
+		snake.addFirst(newSquare);
 	}
 
 	public ArrayDeque<Square> getSnake() {

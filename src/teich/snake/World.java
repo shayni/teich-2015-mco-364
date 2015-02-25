@@ -14,12 +14,15 @@ public class World {
 
 	public boolean checkCollision() {
 		Square s = snake.getSnake().getFirst();
-		if (s.getX() == 400 || s.getY() == 400) {
+		if (s.getX() == 410 || s.getX() == 5 || s.getY() == 410
+				|| s.getY() == 10) {
 			gameOver = true;
 			return gameOver;
 		}
-		if (s.getX() == food.getX() && s.getY() == food.getY()) {
-			snake.grow(new Square(food.getX(), food.getY()));
+		if (s.getX() == food.getSquare().getX()
+				&& s.getY() == food.getSquare().getY()) {
+			snake.grow(new Square(food.getSquare().getX(), food.getSquare()
+					.getY()));
 			food.spawnFood();
 		}
 		return gameOver;

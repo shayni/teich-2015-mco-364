@@ -12,7 +12,7 @@ public class SnakeFrame extends JFrame implements KeyListener {
 	private World world;
 
 	public SnakeFrame() {
-		setSize(400, 400);
+		setSize(450, 450);
 		setTitle("Snake");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

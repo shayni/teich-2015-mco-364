@@ -18,21 +18,19 @@ public class WorldComponent extends JComponent {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
+		g.drawRect(10, 10, 410, 400);
+
 		Snake snake = world.getSnake();
 		Food food = world.getFood();
+
 		ArrayDeque<Square> q = snake.getSnake();
-		// for (Square s : q) {
-		// q.addFirst(s);
-		// }
-
-		int foodX = food.getX();
-		int foodY = food.getY();
-
 		for (Square s : q) {
 			g.fillRect(s.getX(), s.getY(), 10, 10);
 		}
 
 		g.setColor(Color.RED);
+		int foodX = food.getSquare().getX();
+		int foodY = food.getSquare().getY();
 		g.fillRect(foodX, foodY, 10, 10);
 	}
 

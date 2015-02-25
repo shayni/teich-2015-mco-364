@@ -20,6 +20,7 @@ public class GameThread extends Thread {
 				boolean gameOver = frame.getWorld().checkCollision();
 				if (gameOver) {
 					while (true) {
+						frame.getContentPane().removeAll();
 						Thread.sleep(60);
 					}
 				}
