@@ -6,8 +6,9 @@ public class Snake {
 
 	ArrayDeque<Square> snake;
 	int direction;
+	private boolean gameOver;
 
-	public Snake() {
+	public Snake(boolean gameOver) {
 		snake = new ArrayDeque<Square>();
 		snake.add(new Square(200, 200));
 		snake.add(new Square(210, 200));
@@ -15,6 +16,7 @@ public class Snake {
 		snake.add(new Square(230, 200));
 		snake.add(new Square(240, 200));
 		direction = 6;
+		this.gameOver = gameOver;
 	}
 
 	public void grow(Square s) {
@@ -26,38 +28,28 @@ public class Snake {
 		Square newSquare = s;
 		switch (dir) {
 		case 6:
-
 			int x = s.getX();
 			int y = s.getY();
-			// s.setX((x + 10));
 			newSquare = new Square((x + 10), y);
-			// snake.addFirst(s);
-			// snake.removeLast();
 			break;
 		case 4:
 			x = s.getX();
 			y = s.getY();
 			newSquare = new Square((x - 10), y);
-
-			// s.setX((x - 10));
-			// snake.addFirst(s);
 			break;
 		case 8:
 			x = s.getX();
 			y = s.getY();
-			// s.setY((y - 10));
 			newSquare = new Square((x), (y - 10));
-
-			// snake.addFirst(s);
 			break;
 		case 2:
 			x = s.getX();
 			y = s.getY();
 			newSquare = new Square((x), (y + 10));
-
-			// s.setY((y + 10));
-			// snake.addFirst(s);
 			break;
+		}
+		if (snake.contains(newSquare)) {
+			gameOver = true;
 		}
 		snake.removeLast();
 		snake.addFirst(newSquare);

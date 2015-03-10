@@ -7,9 +7,9 @@ public class World {
 	private boolean gameOver;
 
 	public World() {
-		this.snake = new Snake();
 		this.food = new Food();
 		gameOver = false;
+		this.snake = new Snake(gameOver);
 	}
 
 	public boolean checkCollision() {
@@ -25,6 +25,7 @@ public class World {
 					.getY()));
 			food.spawnFood();
 		}
+
 		return gameOver;
 	}
 
