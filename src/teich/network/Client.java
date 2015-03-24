@@ -12,7 +12,7 @@ public class Client {
 
 		Socket socket = null;
 		try {
-			socket = new Socket("localhost", 3761);// waits for OS to
+			socket = new Socket("localhost", 3745);// waits for OS to
 													// make
 													// connection
 
