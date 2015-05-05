@@ -6,6 +6,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import org.apache.commons.io.IOUtils;
+
 public class Client {
 
 	public static void main(String[] args) {
@@ -33,11 +35,12 @@ public class Client {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {// if exception, executes catch and then executes finally
-			try {
-				socket.close();// sends message that there's nothing to be read
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+					// if (socket != null) {
+					// socket.close();// sends message that there's nothing to
+					// be
+					// read
+			// }
+			IOUtils.closeQuietly(socket);
 		}
 	}
 }

@@ -49,7 +49,8 @@ public class ChatClientGUI extends JFrame implements KeyListener {
 		send = new JButton("Send");
 		send.addActionListener(sendListener);
 
-		scrollPane = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+		scrollPane = new JScrollPane(textArea,
+				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
 		socket = new Socket("localhost", 8526);

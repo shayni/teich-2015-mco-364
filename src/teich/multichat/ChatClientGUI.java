@@ -1,4 +1,4 @@
-package teich.network;
+package teich.multichat;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -8,8 +8,8 @@ import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -20,56 +20,57 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class ChatServerGUI extends JFrame implements KeyListener {
+public class ChatClientGUI extends JFrame implements KeyListener {
+
+	private static final long serialVersionUID = 1L;
 
 	private JScrollPane scrollPane;
-	private JTextArea output;
-	private JTextField input;
+	private JTextArea textArea;
+	private JTextField textField;
 	private JButton send;
-	private ChatServer server;
+	private Client client;
 	private Socket socket;
 
-	public ChatServerGUI() throws IOException {
+	public ChatClientGUI() throws UnknownHostException, IOException {
 
 		setSize(400, 400);
-		setTitle("Chat Server");
+		setTitle("Chat Client");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
 		setLayout(new BorderLayout());
 
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 
-		output = new JTextArea();
-		output.setLineWrap(true);
-		output.setWrapStyleWord(true);
-		output.setEditable(false);
+		textArea = new JTextArea();
+		textArea.setLineWrap(true);
+		textArea.setWrapStyleWord(true);
+		textArea.setEditable(false);
 
-		input = new JTextField();
+		textField = new JTextField();
 		send = new JButton("Send");
 		send.addActionListener(sendListener);
 
-		scrollPane = new JScrollPane(output,
+		scrollPane = new JScrollPane(textArea,
 				JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-		ServerSocket serverSocket = new ServerSocket(8526);
-		socket = serverSocket.accept();
-		server = new ChatServer(socket, output);
-		server.accept();
-
-		panel.add(input);
+		panel.add(textField);
 		panel.add(send);
 
-		input.addKeyListener(this);
+		socket = new Socket("localhost", 8523);
+		client = new Client(socket, textArea);
+		textField.addKeyListener(this);
 
 		add(scrollPane, BorderLayout.CENTER);
 		add(panel, BorderLayout.SOUTH);
+		setVisible(true);
+
 	}
 
 	public void display() {
-		String msg = input.getText();
-		output.append("Me: " + msg + "\n");
-		input.setText("");
+		String msg = textField.getText();
+		textField.setText("");
 
 		OutputStream out;
 		try {
@@ -77,9 +78,10 @@ public class ChatServerGUI extends JFrame implements KeyListener {
 			PrintWriter writer = new PrintWriter(out);
 			writer.println(msg);
 			writer.flush();
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
+
 		JScrollBar vertical = scrollPane.getVerticalScrollBar();
 		vertical.setValue(vertical.getMaximum());
 	}
@@ -100,23 +102,12 @@ public class ChatServerGUI extends JFrame implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
 
 	}
 
-	public static void main(String[] args) {
-		ChatServerGUI frame;
-		try {
-			frame = new ChatServerGUI();
-			frame.setVisible(true);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 }
